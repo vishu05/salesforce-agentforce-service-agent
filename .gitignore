@@ -1,0 +1,13 @@
+.sfdx/
+.sf/
+.vscode/
+node_modules/
+.idea/
+*.log
+.DS_Store
+Thumbs.db
+**/local-only/
+scripts/apex/*password*
+scripts/apex/*secret*
+.env
+.env.*
