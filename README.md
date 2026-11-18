@@ -73,8 +73,8 @@ sf org assign permset -o agentforceOrg -n AF_Service_Agent_Access --on-behalf-of
 
 - [x] Transcript analysis
 - [x] BRD + FDD/TDD
-- [x] `Orders__c` + 5 Agent Flows + permset in repo
-- [ ] Einstein / Agentforce enabled in target org (blocked: current DE has no Agentforce license)
-- [ ] Agent Topics + Prompt wired in Builder (needs Agentforce DE)
-- [x] UAT-01 Flow smoke tests PASS (conversational Agent UAT pending Agentforce DE)
-- [x] GitHub push
+- [x] `Orders__c` + 5 Agent Flows + permset deployed to `vishu4sfdc@saibersys.com`
+- [x] Flow smoke UAT PASS (Case 00001440; ORD-1001/1002)
+- [x] GitHub: https://github.com/vishu05/salesforce-agentforce-service-agent
+- [ ] Einstein / Agentforce enablement (current DE has **no** Agentforce license in Salesforce Go)
+- [ ] Agent Builder Topics + Prompt + conversational UAT (needs Agentforce Developer Edition)
