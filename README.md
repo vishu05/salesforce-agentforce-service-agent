@@ -1,19 +1,17 @@
 # Agentforce Service Agent — Customer Support AI
 
-Replication of the YouTube hands-on build: an **Agentforce Service Agent** that looks up orders, creates/status-checks Cases, and summarizes Cases.
-
-**Source video:** https://www.youtube.com/watch?v=mVNjeNgxxQw  
-**Companion blog:** https://www.sfdcgirl.com/2025/02/Agentforce-Service-Agent.html
+Standalone portfolio project: an **Agentforce Service Agent** that looks up orders, creates and status-checks Cases, and summarizes Cases — grounded in Salesforce CRM data via Flow actions and a Prompt Template.
 
 ## Documents
 
 | Doc | Purpose |
 |---|---|
-| [docs/00-Video-Transcript-Analysis.md](docs/00-Video-Transcript-Analysis.md) | Transcript / walkthrough analysis |
 | [docs/01-Business-Requirements-Document.md](docs/01-Business-Requirements-Document.md) | BRD |
 | [docs/02-Functional-and-Technical-Design-Document.md](docs/02-Functional-and-Technical-Design-Document.md) | FDD / TDD |
-| [specs/topic-instructions.md](specs/topic-instructions.md) | Copy-paste Topic + Prompt text |
+| [specs/topic-instructions.md](specs/topic-instructions.md) | Topic + Prompt text for Agent Builder |
+| [docs/03-Manual-Agent-Builder-Checklist.md](docs/03-Manual-Agent-Builder-Checklist.md) | Agent Builder setup checklist |
 | [docs/uat/UAT-01-agent-conversations.md](docs/uat/UAT-01-agent-conversations.md) | Conversational UAT |
+| [docs/uat/UAT-01-results.md](docs/uat/UAT-01-results.md) | Flow smoke-test results |
 
 ## What is in source control
 
@@ -29,9 +27,9 @@ Replication of the YouTube hands-on build: an **Agentforce Service Agent** that 
 
 Agent Builder Topic/Prompt wiring is completed in an **Agentforce-capable** org (Einstein On + Agents On), then optionally retrieved with Agent DX.
 
-## Org requirement (important)
+## Org requirement
 
-Older Developer Edition orgs often **do not** include Einstein Generative AI / Agentforce. Use a free **Agentforce Developer Edition**:
+Use a free **Agentforce Developer Edition** (Einstein Generative AI + Agentforce licensed):
 
 https://www.salesforce.com/form/developer-signup/?d=pb
 
@@ -52,10 +50,10 @@ sf apex run -o agentforceOrg -f scripts/apex/seed-demo-data.apex
 sf org assign permset -o agentforceOrg -n AF_Service_Agent_Access --on-behalf-of <einstein-service-agent-username>
 ```
 
-## Create the agent (UI — matches the video)
+## Create the agent (UI)
 
 1. Setup → Agents → **New Agent** → Agentforce Service Agent  
-2. Remove standard topics/actions  
+2. Remove unused standard topics/actions  
 3. Fill role/company from `specs/topic-instructions.md`  
 4. Add Topics **Cases**, **Order Enquiries**, **Summaries Case** with instructions from the same file  
 5. Attach Flow actions + create Prompt Template for Case Summary  
@@ -71,7 +69,6 @@ sf org assign permset -o agentforceOrg -n AF_Service_Agent_Access --on-behalf-of
 
 ## Status
 
-- [x] Transcript analysis
 - [x] BRD + FDD/TDD
 - [x] `Orders__c` + 5 Agent Flows + permset deployed to `vishu4sfdc@saibersys.com`
 - [x] Flow smoke UAT PASS (Case 00001440; ORD-1001/1002)

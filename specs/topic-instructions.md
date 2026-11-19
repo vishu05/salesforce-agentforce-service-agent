@@ -1,7 +1,5 @@
 # Agentforce Topic Instructions (copy into Agent Builder)
 
-Source: video `mVNjeNgxxQw` + [Sfdc Girl blog](https://www.sfdcgirl.com/2025/02/Agentforce-Service-Agent.html)
-
 ## Agent details
 
 | Field | Value |
@@ -11,7 +9,7 @@ Source: video `mVNjeNgxxQw` + [Sfdc Girl blog](https://www.sfdcgirl.com/2025/02/
 | Role | An AI customer service agent whose job is to help customers with support questions or other issues. |
 | Company | Our company specializes in selling cupcakes. |
 | Type | Agentforce Service Agent (customer) |
-| Standard topics | Remove all; use only custom topics below |
+| Standard topics | Remove unused defaults; use the custom topics below |
 
 ---
 

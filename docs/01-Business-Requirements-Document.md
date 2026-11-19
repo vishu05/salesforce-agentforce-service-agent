@@ -4,8 +4,7 @@
 
 | Item | Detail |
 |---|---|
-| Version | 1.0 — 18 Nov 2026 |
-| Source | YouTube `mVNjeNgxxQw` + companion blog (Sfdc Girl) |
+| Version | 1.1 — 18 Nov 2026 |
 | Owner | Vishwender Saida |
 | Target org | Personal Salesforce Developer Edition (Agentforce-capable) |
 | Status | Approved for Phase-1 build (Agent Builder + Flows + Prompt) |
@@ -35,10 +34,10 @@ Human service agents spend time on repetitive, low-complexity work: looking up o
 | **Service admin / builder** | Configure Topics, Instructions, Flows, Prompt; assign Agentforce user permissions |
 | **Business owner** | Consistent brand tone; compliance (no Id leakage, grounded answers only) |
 
-## 4. In scope (Phase 1 — this video)
+## 4. In scope (Phase 1)
 
 1. Enable Einstein + Agentforce (prerequisite).
-2. Create **Agentforce Service Agent** with custom-only Topics.
+2. Create **Agentforce Service Agent** with custom Topics.
 3. Topics: **Cases**, **Order Enquiries**, **Summaries Case**.
 4. Autolaunched Flows as Agent Actions:
    - Create a Case (+ create Contact if missing)
@@ -61,20 +60,20 @@ Human service agents spend time on repetitive, low-complexity work: looking up o
 
 ## 6. Business requirements
 
-| ID | Requirement | Priority | Source |
+| ID | Requirement | Priority | Trace |
 |---|---|---|---|
-| BR-01 | Customers can retrieve a single order by order number | Must | Video demo |
-| BR-02 | Customers can retrieve all orders for a verified contact (full name + email) | Must | Video demo |
-| BR-03 | Customers can create a support case by providing identity + subject + description | Must | Video demo |
-| BR-04 | If contact does not exist, system creates Contact then Case (no hard failure) | Must | Video Flow walkthrough |
-| BR-05 | Customers can check case status using identity + case number | Must | Video demo |
-| BR-06 | Customers can request a narrative case summary | Must | Video demo |
-| BR-07 | After case create, agent states 24-hour escalation commitment | Should | Instruction |
-| BR-08 | Agent never exposes Salesforce record Ids | Must | Instruction + demo contrast |
-| BR-09 | Agent never invents CRM facts or gives ungrounded general advice | Must | Instruction + Prompt |
-| BR-10 | Agent switches Topics when user changes intent (Cases ↔ Orders) | Must | Instructions |
+| BR-01 | Customers can retrieve a single order by order number | Must | FR-ORD-01 |
+| BR-02 | Customers can retrieve all orders for a verified contact (full name + email) | Must | FR-ORD-02 |
+| BR-03 | Customers can create a support case by providing identity + subject + description | Must | FR-CASE-01 |
+| BR-04 | If contact does not exist, system creates Contact then Case (no hard failure) | Must | FR-CASE-02 |
+| BR-05 | Customers can check case status using identity + case number | Must | FR-CASE-04 |
+| BR-06 | Customers can request a narrative case summary | Must | FR-SUM-01 |
+| BR-07 | After case create, agent states 24-hour escalation commitment | Should | Instructions |
+| BR-08 | Agent never exposes Salesforce record Ids | Must | NFR-SEC |
+| BR-09 | Agent never invents CRM facts or gives ungrounded general advice | Must | NFR-SEC |
+| BR-10 | Agent switches Topics when user changes intent (Cases ↔ Orders) | Must | FR-X-01 |
 | BR-11 | Agent uses polite, empathetic, human-like language | Should | Instructions |
-| BR-12 | Case created from agent is linked to Contact (and Account when present) | Must | Demo |
+| BR-12 | Case created from agent is linked to Contact (and Account when present) | Must | FR-CASE-03 |
 
 ## 7. Functional requirements (summary)
 
@@ -83,7 +82,7 @@ See FDD/TDD Doc 02 for full FR catalogue. Capsule:
 - **FR-AGT-01** Customer-facing Agentforce Service Agent exists and is runnable in Builder preview.
 - **FR-CASE-01…05** Create case, get status, summarize case, null-status handling, collect required fields.
 - **FR-ORD-01…03** Order by number; orders by contact; ask identifiers one-by-one when needed.
-- **FR-DAT-01** Custom `Orders__c` with Contact, Amount, Date, Status (blog-aligned).
+- **FR-DAT-01** Custom `Orders__c` with Contact, Amount, Date, Status.
 
 ## 8. Non-functional requirements
 
@@ -97,17 +96,16 @@ See FDD/TDD Doc 02 for full FR catalogue. Capsule:
 
 ## 9. Assumptions & dependencies
 
-1. Target org supports **Einstein Generative AI + Agentforce** (new Developer Edition / playground if current DE lacks GenAI).
-2. Orders for the demo use custom object `Orders__c` (blog), not B2C Commerce / standard Order alone.
-3. Companion blog instructions are authoritative for Topic text when video ASR is noisy.
+1. Target org supports **Einstein Generative AI + Agentforce**.
+2. Orders for the demo use custom object `Orders__c` (Contact-centric), not B2C Commerce / standard Order alone.
+3. Topic instruction text in `specs/topic-instructions.md` is the configuration source of truth.
 4. Prompt Builder / GenAI features require Einstein On.
 
 ## 10. Risks
 
 | Risk | Mitigation |
 |---|---|
-| Current personal DE lacks Agentforce | Sign up / authorize Agentforce Developer Edition; document in README |
-| Incomplete blog Flow XML | Rebuild Flows from described logic; validate in Builder |
+| Org lacks Agentforce license | Use Agentforce Developer Edition; document in README |
 | LLM non-determinism | Tight Instructions + UAT utterance set; iterate |
 | Id leakage if instruction omitted | Explicit instruction on every Topic |
 

@@ -4,9 +4,8 @@
 
 | Item | Detail |
 |---|---|
-| Version | 1.0 — 18 Nov 2026 |
-| Source | YouTube `mVNjeNgxxQw` + [Sfdc Girl blog](https://www.sfdcgirl.com/2025/02/Agentforce-Service-Agent.html) |
-| Related | BRD `01-Business-Requirements-Document.md`, Transcript `00-Video-Transcript-Analysis.md` |
+| Version | 1.1 — 18 Nov 2026 |
+| Related | BRD `01-Business-Requirements-Document.md` |
 
 ---
 
@@ -31,7 +30,7 @@ Customer utterance
 
 | ID | Requirement | Topic / Action |
 |---|---|---|
-| FR-AGT-01 | Agent type = Agentforce Service Agent; custom Topics only (standard removed) | Agent |
+| FR-AGT-01 | Agent type = Agentforce Service Agent; custom Topics for Cases / Orders / Summary | Agent |
 | FR-AGT-02 | Company / role / description configurable; runs as Agentforce Service Agent user | Agent |
 | FR-AGT-03 | Optional conversational event-log enrichment | Agent |
 | FR-CASE-01 | Collect First Name, Last Name, Email, Subject, Description to create Case | Create a Case |
@@ -83,7 +82,7 @@ Customer utterance
 | Escalation messaging | Topic instruction after create |
 | No Id leakage | Topic instruction |
 | One Flow per action | Design standard |
-| Order object = `Orders__c` | Data model (blog-aligned) |
+| Order object = `Orders__c` | Data model (Contact-centric) |
 
 ---
 
@@ -107,13 +106,13 @@ Customer utterance
 ### 6.2 Custom: `Orders__c`
 | Field | API | Type | Notes |
 |---|---|---|---|
-| Order Number | `Name` | Auto Number / Text | Used as “order number” in chat |
+| Order Number | `Name` | Text | Used as “order number” in chat |
 | Contact | `Contact__c` | Lookup(Contact) | Required for by-contact query |
 | Amount | `Amount__c` | Currency | |
 | Order Date | `Order_Date__c` | Date | |
 | Status | `Status__c` | Picklist | New, Confirmed, Shipped, Delivered, Cancelled |
 
-> Why custom? Blog Flow XML queries `Orders__c`. Standard `Order` is Account-centric and needs Contracts/Pricebooks; custom object matches the video’s Contact-centric demo with least setup.
+> Why custom? Standard `Order` is Account-centric and needs Contracts/Pricebooks. A Contact-centric custom object keeps Phase-1 setup simple and matches the agent’s “orders for my contact” journeys.
 
 ## 7. Flows (Autolaunched)
 
@@ -136,11 +135,11 @@ Customer utterance
 | Inputs | Case record / JSON description |
 | Output | `promptResponse` shown in conversation |
 
-Prompt body follows blog: INSTRUCTIONS vs DATA firewall; 3rd person; sections Case Overview → Activity → Contacts; no invented facts; limited jargon.
+Prompt body follows `specs/topic-instructions.md`: INSTRUCTIONS vs DATA firewall; 3rd person; sections Case Overview → Activity → Contacts; no invented facts; limited jargon.
 
 ## 9. Agent Topics (configuration)
 
-Stored as Agentforce metadata after create (Bot / GenAi planner artifacts). Source of truth for Topic text: `specs/topic-instructions.md` + BRD. Created via Agent Builder and/or `sf agent` after Einstein is enabled.
+Source of truth for Topic text: `specs/topic-instructions.md`. Created via Agent Builder and/or `sf agent` after Einstein is enabled.
 
 | Topic | Actions |
 |---|---|
